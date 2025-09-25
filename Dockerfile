@@ -28,7 +28,7 @@ COPY .build/${OS}-${ARCH}/promtool          /bin/promtool
 COPY documentation/examples/prometheus.yml  /etc/prometheus/prometheus.yml
 COPY LICENSE                                /LICENSE
 COPY NOTICE                                 /NOTICE
-COPY npm_licenses.tar.bz2                   /npm_licenses.tar.bz2
+# COPY npm_licenses.tar.bz2                   /npm_licenses.tar.bz2
 
 WORKDIR /prometheus
 RUN chown -R nobody:nobody /etc/prometheus /prometheus && chmod g+w /prometheus
