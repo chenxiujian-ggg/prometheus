@@ -1,0 +1,32 @@
+name: Build → Export prometheus-with-bash.tar
+
+on:
+  push:
+    branches: [main]
+
+env:
+  IMAGE_NAME: prometheus-with-bash:latest
+
+jobs:
+  build-and-export:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 1. 构建镜像（使用仓库根目录 Dockerfile）
+      - name: Build Docker image
+        run: docker build -t ${{ env.IMAGE_NAME }} .
+
+      # 2. 导出镜像为 tar
+      - name: Export image to tar
+        run: docker save ${{ env.IMAGE_NAME }} > prometheus-with-bash.tar
+
+      # 3. 上传工件（提供下载链接）
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prometheus-with-bash-image
+          path: prometheus-with-bash.tar
+          retention-days: 7
